@@ -1,0 +1,2 @@
+# android_common_mvvm_system
+搭建Android端通用的mvvm架构
