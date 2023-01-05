@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+    </data>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPage"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"/>
+        <View
+            android:background="@color/c_e5"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"/>
+
+        <!--app:tabRippleColor="@null"取消tab的点击效果 -->
+        <com.google.android.material.tabs.TabLayout
+            app:tabMode="fixed"
+            app:tabRippleColor="@null"
+            android:id="@+id/homeTabLayout"
+            app:tabIndicatorHeight="@dimen/dp_0"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_60"/>
+
+    </LinearLayout>
+</layout>

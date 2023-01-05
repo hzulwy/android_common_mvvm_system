@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<dimen name="burden_dp10">-22.7778dp</dimen>
+	<dimen name="burden_dp5">-11.3889dp</dimen>
+	<dimen name="dp_0">0.0000dp</dimen>
+	<dimen name="dp_1">2.2778dp</dimen>
+	<dimen name="dp_3">6.8333dp</dimen>
+	<dimen name="dp_5">11.3889dp</dimen>
+	<dimen name="dp_10">22.7778dp</dimen>
+	<dimen name="dp_12">27.3333dp</dimen>
+	<dimen name="dp_25">56.9444dp</dimen>
+	<dimen name="dp_60">136.6667dp</dimen>
+</resources>

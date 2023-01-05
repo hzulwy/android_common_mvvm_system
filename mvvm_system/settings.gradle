@@ -11,3 +11,5 @@ dependencyResolutionManagement {
 rootProject.name = "mvvm_system"
 include ':app'
 include ':base_common'
+include ':component_main'
+include ':base_utils'

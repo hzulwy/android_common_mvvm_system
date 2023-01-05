@@ -27,19 +27,21 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : AppCompa
     private fun initViewDataBinding() {
         val config = viewModelConfig
         bd = DataBindingUtil.setContentView(this, config.getLayout())
-        val variableId = config.getVmVariableId()
-        getViewModel()
-        if (variableId != ViewModelConfig.VM_NO_BIND) {
-            //setVariable,当value改变时候，会自动在view更改
-            bd.setVariable(variableId, viewModel)
-        }
-        val bindingParams = config.getBindingParams()
-        run {
-            var i = 0
-            val length = bindingParams.size()
-            while (i < length) {
-                bd.setVariable(bindingParams.keyAt(i), bindingParams.valueAt(i))
-                i++
+        if (config != null) {
+            val variableId = config.getVmVariableId()
+            getViewModel()
+            if (variableId != ViewModelConfig.VM_NO_BIND) {
+                //setVariable,当value改变时候，会自动在view更改
+                bd.setVariable(variableId, viewModel)
+            }
+            val bindingParams = config.getBindingParams()
+            run {
+                var i = 0
+                val length = bindingParams.size()
+                while (i < length) {
+                    bd.setVariable(bindingParams.keyAt(i), bindingParams.valueAt(i))
+                    i++
+                }
             }
         }
     }
