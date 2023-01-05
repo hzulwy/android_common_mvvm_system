@@ -4,15 +4,20 @@ plugins {
     id 'kotlin-kapt'
 }
 
+// 定义变量
+def app_android = rootProject.ext.app_android;
+def app_implementation = rootProject.ext.app_implementation;
+def app_namespace = rootProject.ext.app_namespace;
+
 android {
-    namespace 'com.mvvm.base.common'
-    compileSdk 32
+    namespace app_namespace.base_common
+    compileSdk app_android.compileSdkVersion
 
     defaultConfig {
-        minSdk 21
-        targetSdk 32
+        minSdk app_android.minSdkVersion
+        targetSdk app_android.targetSdkVersion
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner app_android.testInstrumentationRunner
         consumerProguardFiles "consumer-rules.pro"
     }
 
@@ -37,9 +42,8 @@ android {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.activity:activity-ktx:1.5.1'
-    implementation 'androidx.appcompat:appcompat:1.4.0'
-    implementation 'com.google.android.material:material:1.4.0'
-//    kapt 'com.android.databinding:compiler:3.1.4'
+    implementation app_implementation.activityKtx
+    implementation app_implementation.coreKtx
+    implementation app_implementation.appcompat
+    implementation app_implementation.material
 }

@@ -5,18 +5,23 @@ plugins {
     id 'kotlin-kapt'
 }
 
+// 定义变量
+def app_android = rootProject.ext.app_android;
+def app_implementation = rootProject.ext.app_implementation;
+def app_namespace = rootProject.ext.app_namespace;
+
 android {
-    namespace 'com.mvvm.system'
-    compileSdk 32
+    namespace app_namespace.app //替换了之前的AndroidManifest文件中的package标签
+    compileSdk app_android.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.mvvm.system"
-        minSdk 21
-        targetSdk 32
-        versionCode 1
-        versionName "1.0"
+        applicationId app_android.applicationId
+        minSdk app_android.minSdkVersion
+        targetSdk app_android.targetSdkVersion
+        versionCode app_android.versionCode
+        versionName app_android.versionName
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner app_android.testInstrumentationRunner
     }
 
     buildTypes {
@@ -25,6 +30,23 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    sourceSets {
+        main {
+            if (!isRelease) {
+                // 如果是组件化模式，需要单独运行时
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+                java.srcDirs = ['src/main/java']
+                res.srcDirs = ['src/main/res']
+                aidl.srcDirs = ['src/main/aidl']
+                assets.srcDirs = ['src/main/assets']
+            } else {
+                // 集成化模式，整个项目打包
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+            }
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -41,10 +63,12 @@ android {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.0'
-    implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation app_implementation.coreKtx
+    implementation app_implementation.appcompat
+    implementation app_implementation.material
+    implementation app_implementation.constraintlayout
     implementation project(":base_common")
-    implementation project(":component_main")
+    if(isRelease){
+        implementation project(":component_main")
+    }
 }

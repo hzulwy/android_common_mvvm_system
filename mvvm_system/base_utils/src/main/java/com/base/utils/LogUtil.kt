@@ -1,6 +1,7 @@
 package com.base.utils
 
 import android.util.Log
+import com.mvvm.base.common.BuildConfig
 
 object LogUtil {
     private var isDebug = BuildConfig.DEBUG

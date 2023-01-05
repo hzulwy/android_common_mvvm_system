@@ -1,19 +1,32 @@
-plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
-    id 'kotlin-android'
-    id 'kotlin-kapt'
+if(isRelease){
+    apply plugin: 'com.android.library'
+}else{
+    apply plugin: 'com.android.application'
 }
 
+apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+
+// 定义变量
+def app_android = rootProject.ext.app_android;
+def app_implementation = rootProject.ext.app_implementation;
+def app_namespace = rootProject.ext.app_namespace;
+def app_id = rootProject.ext.appId;
+
 android {
-    namespace 'com.component.main'
-    compileSdk 32
+    namespace app_namespace.component_main
+    compileSdk app_android.compileSdkVersion
 
     defaultConfig {
-        minSdk 21
-        targetSdk 32
+        if(!isRelease){
+            applicationId app_id.component_main
+        }
+        minSdk app_android.minSdkVersion
+        targetSdk app_android.targetSdkVersion
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner app_android.testInstrumentationRunner
         consumerProguardFiles "consumer-rules.pro"
     }
 
@@ -23,6 +36,24 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    // 配置资源路径，方便测试环境，打包不集成到正式环境
+    sourceSets {
+        main {
+            if (!isRelease) {
+                // 如果是组件化模式，需要单独运行时,我们需要指定一个AndroidManifest文件才行
+                manifest.srcFile 'src/main/debug/AndroidManifest.xml'
+            } else {
+                // 集成化模式，整个项目打包apk
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+                java {
+                    // release 时 debug 目录下文件不需要合并到主工程
+                    exclude '**/debug/**'
+                }
+            }
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -30,17 +61,17 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    dataBinding{
+    dataBinding {
         enabled = true
     }
 }
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.0'
-    implementation 'com.google.android.material:material:1.4.0'
+    implementation app_implementation.coreKtx
+    implementation app_implementation.appcompat
+    implementation app_implementation.material
     implementation project(":base_utils")
     implementation project(":base_common")
-    implementation 'androidx.viewpager2:viewpager2:1.0.0'
+    implementation app_implementation.viewPage2
 }

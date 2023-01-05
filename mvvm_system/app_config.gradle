@@ -1,0 +1,43 @@
+// 把一些公用的，共用的，可扩展的，加入到这里面来
+// 整个App项目的Gradle配置文件
+// ext 自定义增加我们的内容
+
+ext {
+
+    // 开发环境 / 生产环境（测试/正式）
+    isRelease = true
+
+    // 建立Map存储，对象名、key都可以自定义，groovy糖果语法，非常灵活
+    app_android = [
+            compileSdkVersion        : 32,
+            buildToolsVersion        : "29.0.0",
+
+            applicationId            : "com.mvvm.system",
+            minSdkVersion            : 21,
+            targetSdkVersion         : 32,
+            versionCode              : 1,
+            versionName              : "1.0",
+            testInstrumentationRunner: "androidx.test.runner.AndroidJUnitRunner"
+    ]
+
+    app_namespace = [
+            app           : "com.mvvm.system",
+            base_utils    : 'com.mvvm.base.common',
+            base_common   : 'com.mvvm.base.utils',
+            component_main: 'com.component.main'
+    ]
+
+    appId = [
+            component_main: 'com.component.main'
+    ]
+
+    // 依赖相关的
+    app_implementation = [
+            coreKtx         : 'androidx.core:core-ktx:1.7.0',
+            appcompat       : 'androidx.appcompat:appcompat:1.4.0',
+            material        : 'com.google.android.material:material:1.4.0',
+            constraintlayout: 'androidx.constraintlayout:constraintlayout:2.1.4',
+            activityKtx     : 'androidx.activity:activity-ktx:1.5.1',
+            viewPage2       : 'androidx.viewpager2:viewpager2:1.0.0'
+    ]
+}
